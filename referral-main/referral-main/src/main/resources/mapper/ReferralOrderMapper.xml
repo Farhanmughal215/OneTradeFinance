@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.referral.mapper.ReferralOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.referral.pojo.ReferralOrder">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="fee" property="fee" />
+        <result column="rate" property="rate" />
+        <result column="amount" property="amount" />
+        <result column="address" property="address" />
+        <result column="order_time" property="orderTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_id, fee, rate, amount, address, order_time
+    </sql>
+
+</mapper>

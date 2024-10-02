@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.WithdrawRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.po.WithdrawRecordPO">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="amount" property="amount" />
+        <result column="handle_fee" property="handleFee" />
+        <result column="currency" property="currency" />
+        <result column="address" property="address" />
+        <result column="network" property="network" />
+        <result column="state" property="state" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, amount, handle_fee,currency,address,network,state, remark, create_time, update_time, update_by
+    </sql>
+
+</mapper>

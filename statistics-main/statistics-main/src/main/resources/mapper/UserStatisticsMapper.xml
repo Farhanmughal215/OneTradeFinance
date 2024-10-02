@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.statistics.mapper.UserStatisticsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.statistics.pojo.po.UserStatistics">
+        <id column="id" property="id"/>
+        <result column="statistics_date" property="statisticsDate"/>
+        <result column="symbol" property="symbol"/>
+        <result column="address" property="address"/>
+        <result column="type" property="type"/>
+        <result column="amount" property="amount"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , statistics_date, symbol, address, type, amount, create_time
+    </sql>
+
+    <insert id="insertStatisticsCap">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),symbol ,#{type,jdbcType=VARCHAR},IFNULL(ROUND(SUM( amount ) ,4),0) FROM t_order_metadata
+        WHERE DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        GROUP BY symbol;
+    </insert>
+
+    <insert id="insertStatisticsAmount">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),symbol ,#{type,jdbcType=VARCHAR},ROUND(SUM( amount ) ,4) FROM t_order_metadata
+        WHERE DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        GROUP BY symbol;
+    </insert>
+
+    <insert id="insertPlatformStatisticsAmount">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR}
+        AND symbol='PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM' ,#{type,jdbcType=VARCHAR},ROUND(SUM( amount ) ,4) FROM t_order_metadata
+        WHERE DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
+
+
+    <insert id="insertRemainStatistics">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),symbol ,#{type,jdbcType=VARCHAR},
+        COUNT(
+        <if test="isDistinct">
+            DISTINCT
+        </if>
+        address) FROM t_order_metadata
+        WHERE type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        <if test="remainList != null and remainList.size() > 0">
+            AND address IN
+            <foreach collection="remainList" close=")" open="(" item="it" separator=",">
+                #{it,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        GROUP BY symbol;
+    </insert>
+
+
+    <insert id="insertPlatformRemainStatistics">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR}
+        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM' ,#{type,jdbcType=VARCHAR},
+        COUNT(
+        <if test="isDistinct">
+            DISTINCT
+        </if>
+        address) FROM t_order_metadata
+        WHERE type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        <if test="remainList != null and remainList.size() > 0">
+            AND address IN
+            <foreach collection="remainList" close=")" open="(" item="it" separator=",">
+                #{it,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </insert>
+
+    <insert id="insertTradeSumStatistics">
+        DELETE FROM t_user_statistics WHERE type='trade_sum' AND DATE(statistics_date) =
+            CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),symbol ,'trade_sum',COUNT(DISTINCT address) FROM t_order_metadata
+        WHERE DATE(create_time) = CURDATE() AND type IN ('long', 'close', 'break')
+        GROUP BY symbol;
+    </insert>
+
+
+    <insert id="insertPlatformTradeSumStatistics">
+        DELETE FROM t_user_statistics WHERE type='trade_sum' AND symbol = 'PLATFORM'
+        AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM','trade_sum', COUNT(DISTINCT address)
+        FROM t_order_metadata WHERE DATE (create_time)=CURDATE() AND type IN ('long','close','break');
+    </insert>
+
+    <insert id="insertStatistics">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,address,type,amount)
+        SELECT CURDATE(),symbol ,NULL,#{type,jdbcType=VARCHAR},COUNT(0) FROM t_order_metadata
+        WHERE DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        GROUP BY symbol;
+    </insert>
+
+    <insert id="insertTodayTradeStatistics">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),symbol ,#{type,jdbcType=VARCHAR},COUNT(0) FROM t_order_metadata
+        WHERE transaction_type = #{transactionType,jdbcType=VARCHAR} AND DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        GROUP BY symbol;
+    </insert>
+
+
+    <insert id="insertTodayTradeStatisticsCap">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),symbol ,#{type,jdbcType=VARCHAR},ROUND(SUM( amount ) ,4) FROM t_order_metadata
+        WHERE transaction_type = #{transactionType,jdbcType=VARCHAR} AND DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+        GROUP BY symbol;
+    </insert>
+
+    <insert id="insertPlatformTodayTradeStatisticsCap">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR}
+        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM' ,#{type,jdbcType=VARCHAR},ROUND(SUM( amount ) ,4) FROM t_order_metadata
+        WHERE transaction_type = #{transactionType,jdbcType=VARCHAR} AND DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
+
+    <insert id="insertPlatformTodayTradeStatistics">
+        DELETE FROM t_user_statistics WHERE type=#{type,jdbcType=VARCHAR}
+        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM' ,#{type,jdbcType=VARCHAR},COUNT(0) FROM t_order_metadata
+        WHERE transaction_type = #{transactionType,jdbcType=VARCHAR} AND DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
+
+
+    <insert id="insertTodayAvgLongTime">
+        DELETE FROM t_user_statistics WHERE type = 'avg_opening_time' AND DATE(statistics_date) =
+            CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT
+            CURDATE(),
+            m.symbol,
+            'avg_opening_time',
+            IFNULL(ROUND(AVG((o.done_ts - m.done_ts)/60000),0),0) AS avg_time
+        FROM
+            t_order_metadata m
+                LEFT JOIN t_order_metadata o ON m.order_id = o.reverse_order_id
+                AND o.type = 'close'
+        WHERE
+            DATE ( m.create_time ) = DATE ( o.create_time )
+          AND m.type = 'long'
+          AND o.order_id IS NOT NULL
+          AND DATE ( m.create_time ) = CURDATE()
+        GROUP BY
+            m.symbol;
+    </insert>
+
+    <insert id="insertPlatformTodayAvgLongTime">
+        DELETE FROM t_user_statistics WHERE type = 'avg_opening_time'
+        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT
+            CURDATE(),
+            'PLATFORM',
+            'avg_opening_time',
+            IFNULL(ROUND(AVG((o.done_ts - m.done_ts)/60000),0),0) AS avg_time
+        FROM
+            t_order_metadata m
+                LEFT JOIN t_order_metadata o ON m.order_id = o.reverse_order_id
+                AND o.type = 'close'
+        WHERE
+            DATE ( m.create_time ) = DATE ( o.create_time )
+          AND m.type = 'long'
+          AND o.order_id IS NOT NULL
+          AND DATE ( m.create_time ) = CURDATE()
+    </insert>
+
+    <insert id="insertTodayLongAndCloseCount">
+        DELETE FROM t_user_statistics WHERE type = #{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+            CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT
+            CURDATE(),
+            m.symbol,
+            #{type,jdbcType=VARCHAR},
+            COUNT(DISTINCT m.order_id)
+        FROM
+            t_order_metadata m
+                LEFT JOIN t_order_metadata o ON m.order_id = o.reverse_order_id AND o.type = 'close'
+                AND DATE(m.create_time) = DATE(o.create_time)
+        WHERE
+            m.type = 'long'
+          AND o.order_id IS NOT NULL
+          AND DATE(m.create_time) = CURDATE()
+        GROUP BY
+            m.symbol;
+    </insert>
+
+    <insert id="insertPlatformTodayLongAndCloseCount">
+        DELETE FROM t_user_statistics WHERE type = #{type,jdbcType=VARCHAR}
+        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT
+            CURDATE(),
+            'PLATFORM',
+            #{type,jdbcType=VARCHAR},
+            COUNT(DISTINCT m.order_id)
+        FROM
+            t_order_metadata m
+                LEFT JOIN t_order_metadata o ON m.order_id = o.reverse_order_id AND o.type = 'close'
+                AND DATE(m.create_time) = DATE(o.create_time)
+        WHERE
+            m.type = 'long'
+          AND o.order_id IS NOT NULL
+          AND DATE(m.create_time) = CURDATE()
+    </insert>
+
+    <insert id="insertTodayTradeCount">
+        DELETE FROM t_user_statistics WHERE type = #{type,jdbcType=VARCHAR} AND DATE(statistics_date) =
+            CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT
+            CURDATE(),
+            m.symbol,
+            #{type,jdbcType=VARCHAR},
+            COUNT(DISTINCT m.uid) AS u_cnt
+        FROM
+            t_order_metadata m
+        WHERE
+            m.type IN ('long', 'close')
+          AND DATE(create_time) = CURDATE()
+        GROUP BY
+            m.symbol;
+    </insert>
+
+    <insert id="insertMaxLoss">
+        DELETE
+        FROM t_user_statistics
+        WHERE type = 'max_loss' AND DATE (statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date, symbol, address, type, amount)
+        SELECT NOW(), t.symbol, t.address, 'max_loss', t.amount FROM (
+        SELECT
+        ROW_NUMBER() OVER (partition by symbol ORDER BY amount+0 ASC ) AS rk,
+        amount,
+        address,
+        symbol ,
+        create_time
+        FROM
+        t_order_metadata
+        WHERE
+        type IN('close','break') AND
+        DATE (create_time) = CURDATE()) t  WHERE t.rk=1 AND t.amount &lt; 0
+    </insert>
+
+    <insert id="insertMaxProfit">
+        DELETE
+        FROM t_user_statistics
+        WHERE type = 'max_profit' AND DATE (statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date, symbol, address, type, amount)
+        SELECT NOW(),t.symbol,t.address,'max_profit',t.amount FROM (
+        SELECT
+            ROW_NUMBER() OVER (partition by symbol ORDER BY amount+0 DESC ) AS rk,
+            amount,
+            address,
+            symbol ,
+            create_time
+        FROM
+            t_order_metadata
+        WHERE
+            type IN('close','break') AND
+            DATE (create_time) = CURDATE()) t  WHERE t.rk=1 AND t.amount >= 0
+    </insert>
+
+    <insert id="insertTodayMaxProfitRate">
+        DELETE FROM t_user_statistics WHERE type = 'max_profit_rate' AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,address,type,amount)
+        SELECT
+            CURDATE(),
+            t.symbol,
+            t.address,
+            'max_profit_rate',
+            CONCAT(ROUND(t.ori,2),'%')
+        FROM
+            (
+                SELECT
+                    ROW_NUMBER() OVER ( PARTITION BY symbol ORDER BY ( amount * 100 / margin_amount ) DESC ) AS rk,
+                        amount,
+                    ( amount * 100 / margin_amount ) AS ori,
+                    address,
+                    id,
+                    symbol,
+                    create_time
+                FROM
+                    t_order_metadata
+                WHERE
+                    type IN ( 'close', 'break' )
+                  AND DATE ( create_time ) = CURDATE()) t
+        WHERE
+            t.rk = 1
+          AND t.ori >= 0
+    </insert>
+
+
+
+    <insert id="insertTodayMaxLossRate">
+        DELETE FROM t_user_statistics WHERE type = 'max_loss_rate' AND DATE(statistics_date) =
+        CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,address,type,amount)
+        SELECT
+        CURDATE(),
+        t.symbol,
+        t.address,
+        'max_loss_rate',
+        CONCAT(ROUND(t.ori,2),'%')
+        FROM
+        (
+        SELECT
+        ROW_NUMBER() OVER ( PARTITION BY symbol ORDER BY ( amount * 100 / margin_amount ) ASC ) AS rk,
+        amount,
+        ( amount * 100 / margin_amount ) AS ori,
+        address,
+        id,
+        symbol,
+        create_time
+        FROM
+        t_order_metadata
+        WHERE
+        type IN ( 'close', 'break' )
+        AND DATE ( create_time ) = CURDATE()) t
+        WHERE
+        t.rk = 1
+        AND t.ori &lt; 0
+    </insert>
+
+    <insert id="insertPlatformTodayMaxProfitRate">
+        DELETE FROM t_user_statistics WHERE type = 'max_profit_rate'
+        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,address,type,amount)
+        SELECT
+            CURDATE(),
+            'PLATFORM',
+            t.address,
+            'max_profit_rate',
+            CONCAT(ROUND(t.ori,2),'%')
+        FROM
+            (
+                SELECT
+                    ( amount * 100 / margin_amount ) AS ori,
+                    address
+                FROM
+                    t_order_metadata
+                WHERE
+                    type IN ( 'close', 'break' )
+                  AND DATE ( create_time ) = CURDATE()
+        ORDER BY ori DESC LIMIT 1) t WHERE t.ori > 0
+    </insert>
+
+    <insert id="insertPlatformTodayMaxLossRate">
+        DELETE FROM t_user_statistics WHERE type = 'max_loss_rate'
+                                        AND symbol = 'PLATFORM' AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,address,type,amount)
+        SELECT
+            CURDATE(),
+            'PLATFORM',
+            t.address,
+            'max_loss_rate',
+            CONCAT(ROUND(t.ori,2),'%')
+        FROM
+            (
+                SELECT
+                    ( amount * 100 / margin_amount ) AS ori,
+                    address
+                FROM
+                    t_order_metadata
+                WHERE
+                    type IN ( 'close', 'break' )
+                  AND DATE ( create_time ) = CURDATE()
+        ORDER BY ori ASC LIMIT 1) t WHERE t.ori &lt; 0
+    </insert>
+
+    <insert id="insertPlatformStatisticsCap">
+        DELETE FROM t_user_statistics WHERE type= #{type,jdbcType=VARCHAR} AND symbol = 'PLATFORM'
+                                      AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM' ,#{type,jdbcType=VARCHAR},IFNULL(ROUND(SUM( amount ) ,4),0) FROM t_order_metadata
+        WHERE DATE(create_time) = CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
+
+    <insert id="insertPlatformStatistics">
+        DELETE FROM t_user_statistics WHERE type= #{type,jdbcType=VARCHAR} AND symbol = 'PLATFORM'
+                                      AND DATE(statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date,symbol,type,amount)
+        SELECT CURDATE(),'PLATFORM',#{type,jdbcType=VARCHAR},COUNT(0) FROM t_order_metadata
+        WHERE DATE (create_time)=CURDATE() AND type IN
+        <foreach collection="orderType" close=")" open="(" item="it" separator=",">
+            #{it,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
+
+    <insert id="insertPlatformMaxLoss">
+        DELETE
+        FROM t_user_statistics
+        WHERE type = 'max_loss' AND symbol='PLATFORM' AND DATE (statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date, symbol, address, type, amount)
+        SELECT NOW(), 'PLATFORM',address,'max_loss',amount FROM t_order_metadata
+        WHERE type IN ('close','break') AND DATE (create_time)=CURDATE() ORDER BY amount+0 ASC LIMIT 1;
+    </insert>
+
+    <insert id="insertPlatformMaxProfit">
+        DELETE
+        FROM t_user_statistics
+        WHERE type = 'max_profit' AND symbol='PLATFORM' AND DATE (statistics_date) = CURDATE();
+        INSERT INTO t_user_statistics(statistics_date, symbol, address, type, amount)
+        SELECT NOW(),'PLATFORM',address,'max_profit',amount FROM t_order_metadata
+        WHERE type IN ('close','break') AND DATE (create_time)=CURDATE() ORDER BY amount+0 DESC LIMIT 1;
+    </insert>
+
+    <delete id="removeUserReg">
+        DELETE
+        FROM t_user_statistics
+        WHERE type IN('today_reg','total_count') AND symbol='PLATFORM' AND DATE (statistics_date) = CURDATE();
+    </delete>
+
+
+    <select id="getCurrentStatistics" resultType="com.xstocks.statistics.pojo.po.UserStatistics">
+        SELECT *
+        FROM t_user_statistics
+        WHERE type = #{symbol,jdbcType=VARCHAR}
+          AND symbol = #{type,jdbcType=VARCHAR}
+          AND statistics_date >= #{min,jdbcType=TIMESTAMP}
+          AND statistics_date &lt; #{max,jdbcType=TIMESTAMP}
+    </select>
+
+
+    <select id="getDailyStatistics" resultType="com.xstocks.statistics.pojo.vo.DailyDataVo">
+        WITH RECURSIVE DateSeries AS (
+        SELECT
+        CURDATE() - INTERVAL 69 DAY AS statistics_date
+        UNION ALL
+        SELECT
+        statistics_date + INTERVAL 1 DAY
+        FROM
+        DateSeries
+        WHERE
+        statistics_date + INTERVAL 1 DAY <![CDATA[ <= ]]> CURDATE()
+        ),
+        PlatformData AS (
+        SELECT
+        statistics_date,
+        type,
+        CAST(amount AS DECIMAL(20, 10)) AS amount
+        FROM
+        t_user_statistics
+        WHERE
+        symbol = 'PLATFORM'
+        AND type IN ('today_reg', 'total_count', 'trade_sum', 'long', 'close', 'break', 'profit_loss_sum')
+        ),
+        DailySummary AS (
+        SELECT
+        ds.statistics_date,
+        MAX(CASE WHEN pd.type = 'today_reg' THEN pd.amount ELSE 0 END) AS newReg,
+        MAX(CASE WHEN pd.type = 'total_count' THEN pd.amount ELSE 0 END) AS regSum,
+        MAX(CASE WHEN pd.type = 'trade_sum' THEN pd.amount ELSE 0 END) AS tradeSum,
+        MAX(CASE WHEN pd.type = 'long' THEN pd.amount ELSE 0 END) AS longSum,
+        MAX(CASE WHEN pd.type = 'close' THEN pd.amount ELSE 0 END) AS closeSum,
+        MAX(CASE WHEN pd.type = 'break' THEN pd.amount ELSE 0 END) AS breakSum,
+        MAX(CASE WHEN pd.type = 'profit_loss_sum' THEN pd.amount ELSE NULL END) AS profitLossSum
+        FROM
+        DateSeries ds
+        LEFT JOIN
+        PlatformData pd ON ds.statistics_date = pd.statistics_date
+        GROUP BY
+        ds.statistics_date
+        )
+        SELECT
+        statistics_date AS statisticsDate,
+        newReg,
+        regSum,
+        tradeSum,
+        longSum,
+        closeSum,
+        breakSum,
+        profitLossSum
+        FROM
+        DailySummary
+        ORDER BY
+        statisticsDate DESC;
+
+    </select>
+
+</mapper>

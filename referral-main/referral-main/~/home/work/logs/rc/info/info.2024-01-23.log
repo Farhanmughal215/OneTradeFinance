@@ -1,0 +1,561 @@
+2024-01-23 17:49:57.499 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 6100 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 17:49:57.502 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "prod"
+2024-01-23 17:49:57.517 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 17:50:03.094 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 17:50:04.498 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 18:06:18.431 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 10360 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 18:06:18.433 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 18:06:18.451 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 18:06:22.069 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 18:06:22.943 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 18:06:25.247 default [redisson-netty-2-8] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:06:26.565 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:53:47.439 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 18:53:47.452 default [main] INFO  com.xstocks.rc.RCApplication - Starting RCApplication using Java 1.8.0_172 on MacOS with PID 21332 (E:\DEV\ideaProject\rc\target\classes started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 18:53:47.454 default [main] INFO  com.xstocks.rc.RCApplication - The following 1 profile is active: "debug"
+2024-01-23 18:53:50.310 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7888"]
+2024-01-23 18:53:50.310 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-01-23 18:53:50.310 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2024-01-23 18:53:50.475 default [main] INFO  o.a.c.c.C.[.[.[/xstock_api] - Initializing Spring embedded WebApplicationContext
+2024-01-23 18:53:50.796 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 18:53:51.128 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 18:53:53.022 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:53:54.371 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:53:55.492 default [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-01-23 18:54:32.238 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 18:54:32.244 default [main] INFO  com.xstocks.rc.RCApplication - Starting RCApplication using Java 1.8.0_172 on MacOS with PID 7792 (E:\DEV\ideaProject\rc\target\classes started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 18:54:32.245 default [main] INFO  com.xstocks.rc.RCApplication - The following 1 profile is active: "debug"
+2024-01-23 18:54:36.064 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7888"]
+2024-01-23 18:54:36.082 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-01-23 18:54:36.097 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2024-01-23 18:54:36.779 default [main] INFO  o.a.c.c.C.[.[.[/xstock_api] - Initializing Spring embedded WebApplicationContext
+2024-01-23 18:54:37.974 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 18:54:39.056 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 18:54:41.874 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:54:44.290 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:54:47.495 default [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-01-23 18:56:33.749 default [main] INFO  com.xstocks.rc.RCApplication - Starting RCApplication using Java 1.8.0_172 on MacOS with PID 17572 (E:\DEV\ideaProject\rc\target\classes started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 18:56:33.753 default [main] INFO  com.xstocks.rc.RCApplication - The following 1 profile is active: "debug"
+2024-01-23 18:56:33.761 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 18:56:36.725 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7888"]
+2024-01-23 18:56:36.726 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-01-23 18:56:36.727 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2024-01-23 18:56:36.901 default [main] INFO  o.a.c.c.C.[.[.[/xstock_api] - Initializing Spring embedded WebApplicationContext
+2024-01-23 18:56:37.238 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 18:56:37.563 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 18:56:39.281 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:56:40.805 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 18:56:42.567 default [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-01-23 19:02:32.830 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:02:32.885 default [main] INFO  com.xstocks.rc.RCApplication - Starting RCApplication using Java 1.8.0_172 on MacOS with PID 19060 (E:\DEV\ideaProject\rc\target\classes started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:02:32.886 default [main] INFO  com.xstocks.rc.RCApplication - The following 1 profile is active: "debug"
+2024-01-23 19:02:35.608 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7888"]
+2024-01-23 19:02:35.609 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-01-23 19:02:35.610 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2024-01-23 19:02:35.780 default [main] INFO  o.a.c.c.C.[.[.[/xstock_api] - Initializing Spring embedded WebApplicationContext
+2024-01-23 19:02:36.113 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:02:36.456 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:02:38.207 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:02:39.541 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:02:43.154 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7888"]
+2024-01-23 19:04:15.056 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 16108 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:04:15.057 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 19:04:15.071 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:04:19.332 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:04:20.615 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:04:22.654 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:04:23.967 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:05:37.168 default [main] INFO  com.xstocks.rc.AllTest - Started AllTest in 83.151 seconds (JVM running for 85.354)
+2024-01-23 19:05:37.767 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 计算参数:[{"orderId":"1","marginAmount":50.0,"pl":-50.0,"positionStatus":"opening"},{"orderId":"2","marginAmount":30.0,"pl":-40.0,"positionStatus":"opening"},{"orderId":"3","marginAmount":11.0,"pl":30.0,"positionStatus":"opening"}]
+2024-01-23 19:05:38.060 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Starting...
+2024-01-23 19:05:39.081 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Start completed.
+2024-01-23 19:05:39.414 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown initiated...
+2024-01-23 19:05:39.554 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown completed.
+2024-01-23 19:06:08.579 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 12432 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:06:08.582 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 19:06:08.607 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:06:12.981 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:06:14.301 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:06:16.395 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:06:17.733 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:07:30.161 default [main] INFO  com.xstocks.rc.AllTest - Started AllTest in 82.72 seconds (JVM running for 84.493)
+2024-01-23 19:07:30.632 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 计算参数:[{"orderId":"1","marginAmount":50.0,"pl":-50.0,"positionStatus":"opening"},{"orderId":"2","marginAmount":30.0,"pl":-40.0,"positionStatus":"opening"},{"orderId":"3","marginAmount":11.0,"pl":30.0,"positionStatus":"opening"}]
+2024-01-23 19:07:30.909 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Starting...
+2024-01-23 19:07:31.648 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Start completed.
+2024-01-23 19:07:31.934 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown initiated...
+2024-01-23 19:07:32.118 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown completed.
+2024-01-23 19:10:02.633 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 15236 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:10:02.635 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 19:10:02.647 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:10:07.210 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:10:08.765 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:10:11.120 default [redisson-netty-2-9] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:10:12.443 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:11:25.745 default [main] INFO  com.xstocks.rc.AllTest - Started AllTest in 84.234 seconds (JVM running for 87.015)
+2024-01-23 19:11:26.707 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 计算参数:[{"orderId":"1","marginAmount":50.0,"pl":-50.0,"positionStatus":"opening"},{"orderId":"2","marginAmount":30.0,"pl":-40.0,"positionStatus":"opening"},{"orderId":"3","marginAmount":11.0,"pl":30.0,"positionStatus":"opening"}]
+2024-01-23 19:11:27.134 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Starting...
+2024-01-23 19:11:28.019 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Start completed.
+2024-01-23 19:11:28.217 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown initiated...
+2024-01-23 19:11:28.452 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown completed.
+2024-01-23 19:13:46.601 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 17880 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:13:46.603 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 19:13:46.633 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:13:51.387 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:13:52.589 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:13:54.709 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:13:56.016 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:15:08.374 default [main] INFO  com.xstocks.rc.AllTest - Started AllTest in 82.795 seconds (JVM running for 85.072)
+2024-01-23 19:15:09.054 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 计算参数:[{"orderId":"1","marginAmount":30.0,"pl":-50.0,"positionStatus":"opening"},{"orderId":"2","marginAmount":20.0,"pl":-40.0,"positionStatus":"opening"},{"orderId":"3","marginAmount":11.0,"pl":30.0,"positionStatus":"opening"}]
+2024-01-23 19:15:09.057 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 风控通过
+2024-01-23 19:15:09.292 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Starting...
+2024-01-23 19:15:10.121 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Start completed.
+2024-01-23 19:15:10.311 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown initiated...
+2024-01-23 19:15:10.568 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown completed.
+2024-01-23 19:15:51.802 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 17256 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:15:51.804 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 19:15:51.830 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:15:56.027 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:15:57.146 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:15:59.167 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:16:01.581 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:17:14.399 default [main] INFO  com.xstocks.rc.AllTest - Started AllTest in 83.649 seconds (JVM running for 86.272)
+2024-01-23 19:17:14.964 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 计算参数:[{"orderId":"1","marginAmount":30.0,"pl":-50.0,"positionStatus":"opening"},{"orderId":"2","marginAmount":20.0,"pl":-40.0,"positionStatus":"opening"},{"orderId":"3","marginAmount":11.0,"pl":30.0,"positionStatus":"opening"}]
+2024-01-23 19:17:14.965 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 风控通过
+2024-01-23 19:17:15.273 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Starting...
+2024-01-23 19:17:16.226 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Start completed.
+2024-01-23 19:17:16.460 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown initiated...
+2024-01-23 19:17:16.695 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown completed.
+2024-01-23 19:21:19.417 default [main] INFO  com.xstocks.rc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 19256 (started by Administrator in E:\DEV\ideaProject\rc)
+2024-01-23 19:21:19.420 default [main] INFO  com.xstocks.rc.AllTest - The following 1 profile is active: "debug"
+2024-01-23 19:21:19.440 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-23 19:21:24.189 default [main] INFO  c.xstocks.rc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-23 19:21:25.375 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-23 19:21:27.582 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:21:28.918 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-23 19:22:42.168 default [main] INFO  com.xstocks.rc.AllTest - Started AllTest in 83.721 seconds (JVM running for 85.895)
+2024-01-23 19:22:42.536 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 计算参数:[{"orderId":"1","marginAmount":30.0,"pl":-80.0,"positionStatus":"opening"},{"orderId":"2","marginAmount":20.0,"pl":-40.0,"positionStatus":"opening"},{"orderId":"3","marginAmount":11.0,"pl":30.0,"positionStatus":"opening"}]
+2024-01-23 19:22:42.538 default [main] INFO  c.x.r.s.i.PlatFormOutStockServiceImpl - 风控未通过,执行平仓逻辑
+2024-01-23 19:22:42.747 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Starting...
+2024-01-23 19:22:43.506 default [main] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Start completed.
+2024-01-23 19:22:43.670 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown initiated...
+2024-01-23 19:22:43.966 default [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - CPPool - Shutdown completed.

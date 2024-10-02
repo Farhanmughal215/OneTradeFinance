@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.statistics.mapper.OrderMetadataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.statistics.pojo.po.OrderMetadata">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="symbol" property="symbol" />
+        <result column="uid" property="uid" />
+        <result column="address" property="address" />
+        <result column="type" property="type" />
+        <result column="amount" property="amount" />
+        <result column="trade_type" property="tradeType" />
+        <result column="transaction_type" property="transactionType" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_id, symbol, uid, address, type, amount, trade_type, transaction_type, create_time
+    </sql>
+
+</mapper>

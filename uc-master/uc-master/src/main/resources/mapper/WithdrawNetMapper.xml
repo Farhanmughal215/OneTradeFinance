@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.WithdrawNetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.WithdrawNet">
+        <id column="id" property="id" />
+        <result column="net" property="net" />
+        <result column="token_address" property="tokenAddress" />
+        <result column="symbol" property="symbol" />
+        <result column="account_address" property="accountAddress" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, net, token_address, symbol, account_address
+    </sql>
+
+</mapper>

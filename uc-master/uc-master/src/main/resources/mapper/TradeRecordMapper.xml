@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.TradeRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.TradeRecord">
+        <id column="id" property="id" />
+        <result column="currency" property="currency" />
+        <result column="user_id" property="userId" />
+        <result column="amount" property="amount" />
+        <result column="from_address" property="fromAddress" />
+        <result column="to_address" property="toAddress" />
+        <result column="type" property="type" />
+        <result column="tx_hash" property="txHash" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, currency, user_id, amount, from_address, to_address, type, tx_hash, create_time
+    </sql>
+
+    <select id="queryRecord" resultType="com.xstocks.uc.pojo.TradeRecord">
+        SELECT *,
+        DATE_FORMAT(create_time,'%Y/%m/%d') AS date,
+        DATE_FORMAT(create_time,'%T') AS time
+        FROM t_trade_record
+        WHERE user_id = #{param.userId,jdbcType=INTEGER}
+        <if test="param.day != null">
+            AND create_time >= #{param.day,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

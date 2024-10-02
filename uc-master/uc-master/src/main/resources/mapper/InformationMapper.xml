@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.InformationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.Information">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="uuid" property="uuid" />
+        <result column="source" property="source" />
+        <result column="title" property="title" />
+        <result column="lang" property="lang" />
+        <result column="description" property="description" />
+        <result column="image_url" property="imageUrl" />
+        <result column="published_at" property="publishedAt" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, uuid, source,lang, title, description, image_url, published_at, create_time
+    </sql>
+
+</mapper>

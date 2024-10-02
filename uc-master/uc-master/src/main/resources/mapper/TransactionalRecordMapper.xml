@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.TransactionalRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.TransactionalRecord">
+        <id column="id" property="id" />
+        <result column="business_id" property="businessId" />
+        <result column="opt_type" property="optType" />
+        <result column="data" property="data" />
+        <result column="status" property="status" />
+        <result column="send_time" property="sendTime" />
+        <result column="receive_time" property="receiveTime" />
+        <result column="error_message" property="errorMessage" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, business_id, opt_type, data, status, send_time, receive_time, error_message, remark
+    </sql>
+
+</mapper>

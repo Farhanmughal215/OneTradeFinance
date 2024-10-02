@@ -1,0 +1,101 @@
+20:39:57.680 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 8528 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+20:39:57.680 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+20:39:57.682 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+20:39:59.888 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+20:39:59.890 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+20:39:59.890 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+20:40:00.040 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+20:40:01.587 - org.redisson.Version - Redisson 3.24.3
+20:40:02.706 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+20:40:04.266 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+20:40:04.440 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+20:40:05.275 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+20:40:06.501 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+20:40:09.366 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+20:40:09.508 - com.xstocks.uc.UCApplication - Started UCApplication in 12.349 seconds (JVM running for 14.287)
+20:40:12.187 - c.x.u.s.remote.PolygoWsService - polygo subsrcibe started
+20:40:12.407 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+21:30:16.728 - com.xstocks.uc.AllTest - Starting AllTest using Java 1.8.0_172 on MacOS with PID 1800 (started by Administrator in E:\DEV\ideaProject\uc)
+21:30:16.728 - com.xstocks.uc.AllTest - The following 1 profile is active: "debug"
+21:30:16.738 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+21:30:19.880 - org.redisson.Version - Redisson 3.24.3
+21:30:20.763 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+21:30:22.054 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+21:30:22.131 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+21:30:24.950 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+21:30:25.539 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+21:30:30.637 - com.xstocks.uc.AllTest - Started AllTest in 14.334 seconds (JVM running for 15.587)
+21:30:32.863 - c.x.u.s.remote.PolygoWsService - polygo subsrcibe started
+21:30:33.001 - c.x.u.service.impl.EmailServiceImpl - 发送HTML邮件成功:EmailEntity(tos=1114619217@qq.com, ccEmail=null, subject=欢迎注册DEX，请查收验证码！, content=<body style="padding: 0;margin: 0;height: 100%"><div style="background: #fff;padding-bottom: 60px"><div style="width: 150px;margin: 0px auto 10px;padding-top: 30px"/><div style="width: 400px;margin: 0 auto;background-color: #fff;padding: 20px;border-radius: 8px">你好,你的验证码是:123456,有效期为10分钟</div></div></body>)
+21:30:35.097 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown initiated...
+21:30:35.111 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown completed.

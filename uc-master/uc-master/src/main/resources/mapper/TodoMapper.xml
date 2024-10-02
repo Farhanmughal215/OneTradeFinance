@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.TodoMapper">
+
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.po.TodoPO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="todoType" column="todo_type" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+        <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="attachments" column="attachments" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="todoStatus" column="todo_status" jdbcType="INTEGER"/>
+        <result property="feedBack" column="feed_back" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,todo_type,
+        create_by,update_by,create_time,
+        update_time,attachments,description,
+        todo_status,feed_back
+    </sql>
+    <select id="getMyToDo" resultType="com.xstocks.uc.pojo.po.TodoPO">
+        select t.*
+        from todo t
+        join user u on t.user_id = u.id
+        join org o on u.org_code = o.code
+        where o.org_code_path like concat('%', concat(#{path,jdbcType=VARCHAR}, '%'))
+        <if test="userId != null and userId > 0">
+            and u.id = #{userId}
+        </if>
+        <if test="userBizId !=null and userBizId != ''">
+            and u.biz_id like concat('%',#{userBizId,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="phone !=null and phone != ''">
+            and u.phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="todoType != null">
+            and t.todo_type = #{todoType,jdbcType=INTEGER}
+        </if>
+        <if test="todoStatus != null">
+            and t.todo_status = #{todoStatus,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

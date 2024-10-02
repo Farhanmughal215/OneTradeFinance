@@ -1,0 +1,15 @@
+2024-01-16 19:10:45.302 default [main] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+2024-01-16 19:11:59.428 default [http-nio-7878-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/d/quote/agg/f/l, client=127.0.0.1, user=januarius.ming@gmail.com]
+2024-01-16 19:11:59.444 default [http-nio-7878-exec-2] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/d/quote/agg/f/l, client=127.0.0.1, user=januarius.ming@gmail.com]
+2024-01-16 19:12:05.891 default [http-nio-7878-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/d/quote/agg/f/l, client=127.0.0.1, user=januarius.ming@gmail.com]
+2024-01-16 19:12:05.903 default [http-nio-7878-exec-3] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/d/quote/agg/f/l, client=127.0.0.1, user=januarius.ming@gmail.com]
+2024-01-16 19:12:20.802 default [http-nio-7878-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/quote/agg/f/l, client=127.0.0.1, user=januarius.ming@gmail.com]
+2024-01-16 19:12:22.854 default [http-nio-7878-exec-5] DEBUG o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/quote/agg/f/l, client=127.0.0.1, user=januarius.ming@gmail.com, payload={
+	"tickerId": 209,
+	"multiplier": 5,
+	"timeSpan": "minute",
+	"adjusted": true,
+	"sort": "asc",
+	"from": "2023-09-08",
+	"to": "2024-01-11"
+}]

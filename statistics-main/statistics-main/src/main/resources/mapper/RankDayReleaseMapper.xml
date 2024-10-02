@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.statistics.mapper.RankDayReleaseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.statistics.pojo.po.RankDayRelease">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="statistics_date" property="statisticsDate" />
+        <result column="uid" property="uid" />
+        <result column="address" property="address" />
+        <result column="amount" property="amount" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, statistics_date, uid, address, amount, create_time
+    </sql>
+
+    <sql id="desensitize_sql">
+        CONCAT(
+        SUBSTRING(tmp.address, 1,FLOOR((CHAR_LENGTH(tmp.address) - 4) / 2)),
+        '****',
+        SUBSTRING(tmp.address,  CHAR_LENGTH(tmp.address) - FLOOR((CHAR_LENGTH(tmp.address) - 4) / 2) + 1)
+    ) AS address,
+    </sql>
+
+    <select id="queryCurrentUserRank" resultType="com.xstocks.statistics.pojo.vo.RankItemVo">
+        SELECT tmp.rankNo, tmp.uid,
+        <include refid="desensitize_sql"/>
+         tmp.amount FROM
+        (
+            SELECT
+            @cur_rank := IF (
+            @prev_amount = t.amount,
+            @cur_rank,
+            @cur_rank + 1
+            ) AS rankNo,
+            @prev_amount := t.amount AS prev_amount,
+            t.uid,
+            t.address,
+            t.amount
+        FROM
+        t_rank_day_release t
+        CROSS JOIN
+        (SELECT
+        @cur_rank := 0,
+        @prev_amount := NULL) r
+        WHERE t.type = #{type}
+        AND DATE_FORMAT (t.statistics_date, '%Y-%m-%d') = #{date}
+        ORDER BY t.id ASC
+        ) tmp
+        WHERE tmp.uid = #{uid}
+    </select>
+    <select id="queryRankList" resultType="com.xstocks.statistics.pojo.vo.RankItemVo">
+        SELECT
+            r.rankNo,
+            r.uid,
+            r.address,
+            r.amount
+        FROM (
+            SELECT
+            @cur_rank := IF(@prev_amount = t.amount, @cur_rank, @cur_rank + 1) AS rankNo,
+            @prev_amount := t.amount AS prev_amount,
+            t.uid,
+            t.address,
+            t.amount
+            FROM
+            t_rank_day_release t
+            CROSS JOIN (SELECT @cur_rank := 0, @prev_amount := NULL) r
+            WHERE
+            t.type = #{type}
+            AND DATE_FORMAT(t.statistics_date, '%Y-%m-%d') = #{date}
+            ORDER BY t.id ASC
+        ) r
+        WHERE
+        r.rankNo <![CDATA[ <= ]]> #{top}
+    </select>
+
+    <delete id="deleteByParam">
+        delete from t_rank_day_release where type = #{type} and DATE_FORMAT(statistics_date, '%Y-%m-%d') = #{date}
+    </delete>
+
+    <insert id="batchInsert" parameterType="com.xstocks.statistics.pojo.po.RankDayRelease">
+        insert into t_rank_day_release
+            (type, statistics_date, uid, address, amount, create_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type,jdbcType=VARCHAR}, #{item.statisticsDate,jdbcType=DATE}, #{item.uid,jdbcType=VARCHAR},
+            #{item.address,jdbcType=VARCHAR}, #{item.amount,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+    <insert id="insertRemainData">
+        insert into t_rank_day_release (type, statistics_date, uid, address, amount, create_time)
+            select tmp.type, tmp.statistics_date, tmp.uid, tmp.address, tmp.amount, now() from
+            (
+                SELECT
+                    r.rankNo,
+                    r.type,
+                    r.statistics_date,
+                    r.uid,
+                    r.address,
+                    r.amount
+                FROM (
+                         SELECT
+                             @cur_rank := IF(@prev_amount = t.amount, @cur_rank, @cur_rank + 1) AS rankNo,
+            @prev_amount := t.amount AS prev_amount,
+            t.uid,
+            t.address,
+            t.type,
+            t.statistics_date,
+            t.amount
+                         FROM
+                             t_rank_day_pending t
+                             CROSS JOIN (SELECT @cur_rank := 0, @prev_amount := NULL) r
+                         WHERE
+                             t.type = #{type}
+                           AND DATE_FORMAT(t.statistics_date, '%Y-%m-%d') = #{date}
+                         ORDER BY t.id ASC
+                     ) r
+                WHERE
+                    r.rankNo >= #{startRankNo}
+            )tmp
+    </insert>
+</mapper>

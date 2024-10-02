@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.TraderDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.TraderData">
+        <id column="trader_id" property="traderId" />
+        <result column="follow_count" property="followCount" />
+        <result column="trade_count" property="tradeCount" />
+        <result column="pl_amount" property="plAmount" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="follow_total_amount" property="followTotalAmount" />
+        <result column="follow_pl" property="followPl" />
+        <result column="total_profit" property="totalProfit" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        trader_id, follow_count, trade_count, pl_amount, total_amount, follow_total_amount, follow_pl, total_profit
+    </sql>
+
+    <select id="getTraderUids" resultType="java.lang.Integer">
+        SELECT user_id FROM t_trader WHERE id IN
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+
+</mapper>

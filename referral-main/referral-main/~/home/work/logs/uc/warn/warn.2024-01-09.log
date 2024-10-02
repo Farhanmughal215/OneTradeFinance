@@ -1,0 +1,4 @@
+20:40:08.332 - o.s.s.c.a.web.builders.WebSecurity - You are asking Spring Security to ignore Ant [pattern='/a/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+20:40:08.332 - o.s.s.c.a.web.builders.WebSecurity - You are asking Spring Security to ignore Ant [pattern='/xstock-ws/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+21:30:27.821 - o.s.s.c.a.web.builders.WebSecurity - You are asking Spring Security to ignore Ant [pattern='/a/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+21:30:27.823 - o.s.s.c.a.web.builders.WebSecurity - You are asking Spring Security to ignore Ant [pattern='/xstock-ws/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.

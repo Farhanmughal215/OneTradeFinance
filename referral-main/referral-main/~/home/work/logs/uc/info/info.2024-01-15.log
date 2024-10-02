@@ -1,0 +1,176 @@
+22:28:52.948 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 15644 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+22:28:52.951 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+22:28:52.951 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+22:28:56.524 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+22:28:56.524 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+22:28:56.524 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+22:28:56.721 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+22:28:58.931 - org.redisson.Version - Redisson 3.24.3
+22:29:00.719 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+22:29:02.067 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+22:29:02.320 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+22:29:02.855 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+22:29:04.707 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+22:29:10.859 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+22:29:11.050 - com.xstocks.uc.UCApplication - Started UCApplication in 19.224 seconds (JVM running for 21.25)
+22:29:11.858 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+22:32:24.079 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/withdraw/apply
+22:32:50.700 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/net/withdraw/list
+22:32:53.968 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/net/withdraw/list
+22:33:05.211 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/net/withdraw/list
+22:48:20.468 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+22:48:20.507 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 11772 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+22:48:20.508 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+22:48:24.911 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+22:48:24.912 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+22:48:24.913 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+22:48:25.185 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+22:48:27.976 - org.redisson.Version - Redisson 3.24.3
+22:48:30.031 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+22:48:31.497 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+22:48:31.862 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+22:48:32.716 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+22:48:34.943 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+22:48:42.248 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+22:48:42.490 - com.xstocks.uc.UCApplication - Started UCApplication in 23.328 seconds (JVM running for 25.884)
+22:48:43.037 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+22:51:09.106 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:19:48.816 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:20:13.144 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:20:47.497 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:21:00.772 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:23:58.107 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:27:29.811 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:27:58.192 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:28:54.504 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:29:45.184 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:31:25.292 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:32:06.983 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:32:20.412 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:33:24.371 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/getKyc
+23:34:25.524 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:34:30.254 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList
+23:45:17.552 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown initiated...
+23:45:17.557 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown completed.
+23:45:24.157 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+23:45:24.157 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 19924 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+23:45:24.161 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+23:45:26.043 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+23:45:26.044 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+23:45:26.044 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+23:45:26.170 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+23:45:27.306 - org.redisson.Version - Redisson 3.24.3
+23:45:28.063 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+23:45:29.418 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+23:45:29.561 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+23:45:30.235 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+23:45:31.192 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+23:45:35.386 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+23:45:35.501 - com.xstocks.uc.UCApplication - Started UCApplication in 11.866 seconds (JVM running for 12.825)
+23:45:35.905 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+23:46:04.128 - c.x.u.c.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/ticker/allSwapBusinessInfoList

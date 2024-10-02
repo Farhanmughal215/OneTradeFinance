@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.OrgMapper">
+
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.po.OrgPO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="orgCodePath" column="org_code_path" jdbcType="VARCHAR"/>
+        <result property="orgNamePath" column="org_name_path" jdbcType="VARCHAR"/>
+        <result property="parentOrgCode" column="parent_org_code" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+        <result property="addBy" column="add_by" jdbcType="BIGINT"/>
+        <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="OrgNode" type="com.xstocks.uc.pojo.vo.OrgNodeVO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="orgCodePath" column="org_code_path" jdbcType="VARCHAR"/>
+        <result property="orgNamePath" column="org_name_path" jdbcType="VARCHAR"/>
+        <result property="parentOrgCode" column="parent_org_code" jdbcType="VARCHAR"/>
+<!--        <association property="parent" column="parent_org_code" select="com.xstocks.uc.mapper.OrgMapper.getParentOrg"/>-->
+        <collection property="children" column="code" ofType="com.xstocks.uc.pojo.vo.OrgNodeVO" select="getOrgNode"/>
+    </resultMap>
+
+    <resultMap id="OrgParent" type="com.xstocks.uc.pojo.vo.OrgNodeVO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="orgCodePath" column="org_code_path" jdbcType="VARCHAR"/>
+        <result property="orgNamePath" column="org_name_path" jdbcType="VARCHAR"/>
+        <result property="parentOrgCode" column="parent_org_code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getOrgNode" resultMap="OrgNode">
+        select id,
+        code,
+        name,
+        level,
+        org_code_path,
+        org_name_path,
+        parent_org_code
+        from org
+        <where>
+            <choose>
+                <when test="code != null and code != ''">
+                    and parent_org_code = #{code}
+                </when>
+                <otherwise>
+                    <if test="inputCode != null and inputCode != ''">
+                        and code = #{inputCode}
+                    </if>
+                </otherwise>
+            </choose>
+        </where>
+        order by level, id
+    </select>
+
+    <select id="getParentOrg" resultMap="OrgParent">
+        select id,
+               code,
+               name,
+               level,
+               org_code_path,
+               org_name_path,
+               parent_org_code
+        from org
+        where code = #{parent_org_code}
+        order by level, id
+        limit 1
+    </select>
+
+    <sql id="Base_Column_List">
+        id,code,name,
+        level,org_code_path,org_name_path,
+        parent_org_code,create_time,update_time,
+        is_del,add_by,update_by
+    </sql>
+</mapper>

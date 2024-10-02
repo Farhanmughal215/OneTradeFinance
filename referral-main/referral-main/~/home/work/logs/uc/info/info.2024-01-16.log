@@ -1,0 +1,55 @@
+2024-01-16 19:10:36.693 default [main] INFO  com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 9700 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+2024-01-16 19:10:36.693 default [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2024-01-16 19:10:36.697 default [main] INFO  com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+2024-01-16 19:10:39.326 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+2024-01-16 19:10:39.327 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-01-16 19:10:39.335 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+2024-01-16 19:10:39.519 default [main] INFO  o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+2024-01-16 19:10:41.212 default [main] INFO  org.redisson.Version - Redisson 3.24.3
+2024-01-16 19:10:42.106 default [redisson-netty-2-7] INFO  o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-16 19:10:43.384 default [redisson-netty-2-20] INFO  o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+2024-01-16 19:10:43.579 default [main] INFO  com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+2024-01-16 19:10:44.308 default [main] INFO  com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+2024-01-16 19:10:45.317 default [main] INFO  c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+2024-01-16 19:10:50.440 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+2024-01-16 19:10:50.598 default [main] INFO  com.xstocks.uc.UCApplication - Started UCApplication in 14.708 seconds (JVM running for 17.11)
+2024-01-16 19:10:51.460 default [RMI TCP Connection(3)-192.168.0.100] INFO  o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-16 19:11:59.179 default [http-nio-7878-exec-2] INFO  c.x.u.config.security.JwtTokenFilter - requestUrl:/xstock_api_test/d/quote/agg/f/l
+2024-01-16 19:12:05.684 default [http-nio-7878-exec-3] INFO  c.x.u.config.security.JwtTokenFilter - requestUrl:/xstock_api_test/d/quote/agg/f/l
+2024-01-16 19:12:20.563 default [http-nio-7878-exec-5] INFO  c.x.u.config.security.JwtTokenFilter - requestUrl:/xstock_api_test/c/quote/agg/f/l
+2024-01-16 19:12:20.833 default [http-nio-7878-exec-5] INFO  c.x.u.c.product.BaseController - 转发quote的地址:http://192.168.1.12:17878/quote/c/agg/f/l

@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: statistics
+  profiles:
+    active: debug
+
+server:
+  port: 7891
+  compression:
+    enabled: true
+  error:
+    include-binding-errors: always
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+  servlet:
+    context-path: /statistics
+  forward-headers-strategy: none
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+app:
+  okhttp-config:
+    connect-timeout: 2000
+    read-timeout: 60000
+    write-timeout: 20000
+    max-idle-connections: 20
+    keep-alive-duration: 3600

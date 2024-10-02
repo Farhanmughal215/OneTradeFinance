@@ -1,0 +1,257 @@
+02:02:31.698 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 1260 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+02:02:31.698 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+02:02:31.701 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+02:02:33.710 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+02:02:33.710 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+02:02:33.710 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+02:02:33.861 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+02:02:35.058 - org.redisson.Version - Redisson 3.24.3
+02:02:35.961 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+02:02:37.246 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+02:02:37.423 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+02:02:38.084 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+02:02:39.238 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+02:02:43.322 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown initiated...
+02:02:43.331 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown completed.
+02:02:43.334 - o.a.catalina.core.StandardService - Stopping service [Tomcat]
+02:03:30.860 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+02:03:30.863 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 5008 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+02:03:30.864 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+02:03:32.770 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+02:03:32.770 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+02:03:32.771 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+02:03:32.910 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+02:03:34.141 - org.redisson.Version - Redisson 3.24.3
+02:03:34.907 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+02:03:37.211 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+02:03:37.405 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+02:03:38.026 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+02:03:39.013 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+02:03:43.644 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+02:03:43.769 - com.xstocks.uc.UCApplication - Started UCApplication in 13.443 seconds (JVM running for 14.344)
+02:03:44.196 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:20:23.298 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 9704 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+16:20:23.298 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+16:20:23.301 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+16:20:25.263 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+16:20:25.264 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:20:25.265 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+16:20:25.465 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+16:20:26.643 - org.redisson.Version - Redisson 3.24.3
+16:20:27.552 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+16:20:28.798 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+16:20:28.980 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+16:20:29.696 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+16:20:30.634 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+16:20:34.968 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+16:20:35.092 - com.xstocks.uc.UCApplication - Started UCApplication in 12.269 seconds (JVM running for 13.751)
+16:20:35.555 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:49:18.197 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 2140 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+16:49:18.197 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+16:49:18.199 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+16:49:20.529 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+16:49:20.529 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:49:20.529 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+16:49:20.666 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+16:49:22.131 - org.redisson.Version - Redisson 3.24.3
+16:49:22.914 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+16:49:24.252 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+16:49:24.410 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+16:49:25.227 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+16:49:26.246 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+16:49:30.493 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+16:49:30.610 - com.xstocks.uc.UCApplication - Started UCApplication in 12.941 seconds (JVM running for 14.111)
+16:49:31.050 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:54:03.040 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown initiated...
+16:54:03.046 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Shutdown completed.
+16:54:07.989 - com.xstocks.uc.UCApplication - Starting UCApplication using Java 1.8.0_172 on MacOS with PID 13252 (E:\DEV\ideaProject\uc\target\classes started by Administrator in E:\DEV\ideaProject\uc)
+16:54:07.988 - o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+16:54:07.991 - com.xstocks.uc.UCApplication - The following 1 profile is active: "debug"
+16:54:09.931 - o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-7878"]
+16:54:09.931 - o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:54:09.931 - o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.69]
+16:54:10.075 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring embedded WebApplicationContext
+16:54:11.251 - org.redisson.Version - Redisson 3.24.3
+16:54:12.051 - o.r.c.p.MasterPubSubConnectionPool - 1 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+16:54:13.334 - o.r.c.pool.MasterConnectionPool - 24 connections initialized for r-bp1fck3fhp2n1hwjcfpd.redis.rds.aliyuncs.com/47.111.52.12:6379
+16:54:13.471 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Starting...
+16:54:14.085 - com.zaxxer.hikari.HikariDataSource - startHikariCPPool - Start completed.
+16:54:15.063 - c.xstocks.uc.config.LuaScriptConfig - scriptLoad success local rate = redis.call('HGET', KEYS[1], KEYS[3]);
+local rate_ms = redis.call('HGET', KEYS[1], KEYS[4]);
+
+local interval_ms = 20;
+if (rate_ms)
+then
+    if (tonumber(rate_ms) > 0) then
+        rate_ms = tonumber(rate_ms)
+    end
+else
+    rate_ms = 1000
+end
+if (rate)
+then
+    if (tonumber(rate) > 0)
+    then
+        interval_ms = rate_ms / tonumber(rate)
+    end
+end
+
+local wait_ms = 0;
+local val = redis.call('HGET', KEYS[1], KEYS[2]);
+if (val)
+then
+    val = tonumber(val)
+    local diff = tonumber(ARGV[1]) - tonumber(interval_ms);
+    if (diff < val) then
+        wait_ms = val - diff
+    else
+        redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+    end
+else
+    redis.call('HSET', KEYS[1], KEYS[2], ARGV[1]);
+end
+
+return wait_ms;
+16:54:19.396 - o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-7878"]
+16:54:19.521 - com.xstocks.uc.UCApplication - Started UCApplication in 12.073 seconds (JVM running for 13.057)
+16:54:19.800 - o.a.c.c.C.[.[.[/xstock_api_test] - Initializing Spring DispatcherServlet 'dispatcherServlet'

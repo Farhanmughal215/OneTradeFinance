@@ -1,0 +1,232 @@
+spring:
+  application:
+    name: xstock
+  servlet:
+    multipart:
+      max-file-size: 50MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.1.11:3306/uc?characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false&allowPublicKeyRetrieval=TRUE&allowMultiQueries=true
+    username: root
+    password: adm#inY33
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 100
+      idle-timeout: 30000
+      pool-name: CPPool
+      max-lifetime: 1800000
+      connection-timeout: 31000
+      connection-test-query: SELECT 1
+  redis:
+    redisson:
+      config: |
+        singleServerConfig:
+          database: 0
+          address: redis://192.168.1.11:6379
+          password: J2i1KpI1d3
+          idleConnectionTimeout: 10000
+          connectTimeout: 10000
+          timeout: 10000
+          retryAttempts: 3
+          retryInterval: 1500
+          connectionMinimumIdleSize: 24
+          connectionPoolSize: 64
+          dnsMonitoringInterval: 5000
+          pingConnectionInterval: 30000
+  rabbitmq:
+    addresses: amqp://192.168.1.11:5672
+    username: guest
+    password: guest
+    template:
+      retry:
+        enabled: true
+        max-interval: 3000ms
+        max-attempts: 5
+        multiplier: 1.2
+        initial-interval: 1000ms
+  mail:
+    host: email.onetradefinance.co
+    protocol: smtp
+    default-encoding: utf-8
+    username: noreply@onetradefinance.co
+    #授权码
+    password: noreply#123
+    test-connection: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            trust: email.onetradefinance.co
+          socketFactory:
+            class: 'javax.net.ssl.SSLSocketFactory'
+            port: 465
+          starttls:
+            enable: true
+            required: true
+
+server:
+  port: 7878
+  compression:
+    enabled: true
+  error:
+    include-binding-errors: always
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+  servlet:
+    context-path: /xstock_api
+  forward-headers-strategy: none
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+app:
+  task-config:
+    enable: ${ENABLE_TASK:false}
+  okhttp-config:
+    connect-timeout: 2000
+    read-timeout: 60000
+    write-timeout: 2000
+    max-idle-connections: 20
+    keep-alive-duration: 3600
+  jwt-config:
+    secret-key: 3c50dd6038ca4266980e1e173d230366
+    user-expire-seconds: 3600
+    admin-expire-seconds: 86400
+  stomp-config:
+    endpoint: "/xstock-ws"
+    application-destination-prefix: "/ticker"
+    relay:
+      host: "192.168.1.11"
+      port: 61613
+      login: "guest"
+      passcode: "guest"
+      broker-destination-prefix: /topic,/queue
+  rabbitmq-config:
+    user:
+      exchange: xstock-user
+      queue-order: user-order
+      queue-ai: user-ai
+    deposit:
+      exchange: xstock-deposit
+      queue-order: deposit-order
+      queue-ai: deposit-ai
+    withdraw:
+      exchange: xstock-withdraw
+      queue-order: withdraw-order
+      queue-ai: withdraw-ai
+  product-config:
+    - product: order
+      host: http://192.168.1.11:11234/order
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: ticker
+      host: http://192.168.1.11:9091/ticker
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: quote
+      host: http://192.168.1.13:17878/quote
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: aistock
+      host: http://192.168.1.12:17878/aistock
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: chainbridge
+      host: http://192.168.1.11:7021/chainbridge
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: exchange-engine
+      host: http://192.168.1.11:11234/exchange-engine
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: dex
+      host: http://192.168.1.11:10188/dex
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: brokerage
+      host: http://192.168.1.11:9092/brokerage
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: chainbridge-backend
+      host: http://192.168.1.11:7899/chainbridge_backend
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: analysis
+      host: http://192.168.1.11:14321/analysis
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: follow
+      host: http://192.168.1.11:14333/follow
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+    - product: referral
+      host: http://192.168.1.11:7890/referral
+      aapi: /a/
+      capi: /c/
+      bapi: /b/
+
+  aliyun-config:
+    ak: LTAI5tEXGr3YDdX5LwFUi2qB
+    sk: HlA2w8lIQcYgjBqJVkEdMlw7ZSX41m
+    oss-config:
+      end-point: oss-us-east-1.aliyuncs.com
+      bucket: xstock4uc-fjly
+  marketaux-config:
+    api-key: Wciuk3DI4JFkxXx3qWjFI6PPcza6fh7I9QJz1lfU
+    news-url: https://api.marketaux.com/v1/news/all?limit=50&language={lang}&api_token=${app.marketaux-config.api-key}&page={page_no}&published_after={now}
+    economy-url: https://api.marketaux.com/v1/news/all?limit=50&api_token=${app.marketaux-config.api-key}&page={page_no}&published_after={now}&countries=global
+    seven24-url: https://api.marketaux.com/v1/news/all?limit=50&language={lang}&api_token=${app.marketaux-config.api-key}&page={page_no}&published_after={now}&industries=Basic Materials,Communication Services,Consumer Cyclical,Consumer Defensive,Consumer Goods,Energy,Financial,Financial Services,Healthcare,Industrial Goods,Industrials,Real Estate,Services,Technology,Utilities
+    total-page: 20
+    language: en,fr,ja,ko,es,de,hi,it
+  polygo-config:
+    api-key: 8XcO4o1Z6xjp4zsPvfB31aZ30_7UqoYQ
+    aggregates-page-size: 300
+    aggregates-url: https://api.polygon.io/v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}?apiKey=${app.polygo-config.api-key}&adjusted=true&sort={sort}&limit={pageSize}
+    latest-day-url: https://api.polygon.io/v2/aggs/ticker/{stocksTicker}/prev?adjusted=true&apiKey=${app.polygo-config.api-key}
+    latest-trade-url: https://api.polygon.io/v2/last/trade/{stocksTicker}?apiKey=${app.polygo-config.api-key}
+    latest-quote-url: https://api.polygon.io/v2/last/nbbo/{stocksTicker}?apiKey=${app.polygo-config.api-key}
+    latest-ticker-url: https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers/{stocksTicker}?apiKey=${app.polygo-config.api-key}
+    ws-url: wss://socket.polygon.io/stocks
+  telesign-config:
+    customer-id: 7B335BCB-CCE5-4200-9883-7D8901E5F8E1
+    api-key: vKhgceGGlZbW/dt3foZOfCu7vAtTK1pyJ8JQrxcOvsJm6iqEYfWik4Q5e10WSFoxAKlNwKKJJ49X+vDx5dXaiw==
+    verify-sms: https://rest-ww.telesign.com/v1/verify/sms
+    verify-initiate: https://verify.telesign.com/silent/initiate
+  zerobounce-config:
+    api-key: 5e7e9ed9c67846c5a7df0cdf7da7d281
+  chainbridge:
+    rpc:
+      eth-address-url: http://192.168.1.11:7021/chainbridge/c/create/addr
+      refund-url: http://192.168.1.11:7021/chainbridge/c/transfer
+  analysis:
+    rpc:
+      trader-profit-url: http://192.168.1.11:14321/analysis/c/data/getFollowerListByTraderUid
+      follow-users-profit-url: http://192.168.1.11:14321/analysis/c/data/getFollowUsers
+      trader-stats-list-url: http://192.168.1.11:14321/analysis/c/traderInvestmentStats/list
+      recharge-url: http://192.168.1.11:14321/analysis/c/fas/recharge
+      followorno-url: http://192.168.1.11:14321/analysis/c/followCountRecord/updateRecord
+      freeze-balance-url: http://192.168.1.11:14321/analysis/c/fas/freezeBalance
+      update-freeze-url: http://192.168.1.11:14321/analysis/c/fas/updateFreeze
+      sync-trader-data-url: http://192.168.1.11:14321/analysis/b/tradeInfo
+  follow:
+    rpc:
+      opening-order-url: http://192.168.1.11:14333/follow/s/inner/queryFollowOrder
+  oss:
+    access-url: http://192.168.1.11:9095/
+    upload-url: http://192.168.1.11:9095/upload

@@ -1,0 +1,61 @@
+02:02:39.218 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+02:03:38.991 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+02:04:11.546 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+02:04:11.719 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 1,
+    "pageSize": 50,
+    "newsType": 3, 
+    "lang": "en"
+}]
+16:20:30.619 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+16:20:38.580 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:20:38.761 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 1,
+    "pageSize": 50,
+    "newsType": 3, 
+    "lang": "en"
+}]
+16:20:51.508 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:20:51.573 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 1,
+    "pageSize": 50,
+    "newsType": 2, 
+    "lang": "en"
+}]
+16:22:48.222 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:22:48.285 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 1,
+    "pageSize": 50,
+    "newsType": 2, 
+    "lang": "en"
+}]
+16:45:18.748 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:45:18.811 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 1,
+    "pageSize": 50,
+    "newsType": 2, 
+    "lang": "en"
+}]
+16:45:25.020 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:45:25.149 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 1,
+    "pageSize": 50,
+    "newsType": 1, 
+    "lang": "en"
+}]
+16:47:15.745 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:47:15.807 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 100,
+    "pageSize": 50,
+    "newsType": 1, 
+    "lang": "en"
+}]
+16:47:23.556 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/a/n/information, client=127.0.0.1]
+16:47:23.651 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/a/n/information, client=127.0.0.1, payload={
+    "pageNo": 20,
+    "pageSize": 50,
+    "newsType": 1, 
+    "lang": "en"
+}]
+16:49:26.230 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+16:54:15.047 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use

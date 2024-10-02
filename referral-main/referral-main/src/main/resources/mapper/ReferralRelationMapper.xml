@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.referral.mapper.ReferralRelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.referral.pojo.ReferralRelation">
+        <id column="id" property="id" />
+        <result column="referral_id" property="referralId" />
+        <result column="user_id" property="userId" />
+        <result column="user_address" property="userAddress" />
+        <result column="user_logo" property="userLogo" />
+        <result column="total_rebates" property="totalRebates" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, referral_id, user_id, user_address, user_logo,total_rebates, create_time
+    </sql>
+
+
+    <select id="userList" resultType="com.xstocks.referral.pojo.ReferralRelation">
+        SELECT r.*
+        FROM t_referral_relation r
+                 LEFT JOIN t_referral_code c ON r.referral_id = c.id
+        WHERE c.user_id = #{uid,jdbcType=INTEGER}
+        ORDER BY r.total_rebates DESC LIMIT 3
+    </select>
+
+</mapper>

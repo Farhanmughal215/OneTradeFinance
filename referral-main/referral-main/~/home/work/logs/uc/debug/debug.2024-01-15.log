@@ -1,0 +1,49 @@
+22:29:04.683 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+22:33:05.415 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/net/withdraw/list, client=127.0.0.1, user=18810017587]
+22:33:05.546 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/net/withdraw/list, client=127.0.0.1, user=18810017587]
+22:48:34.905 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+22:51:09.391 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+22:51:09.539 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:19:49.013 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:19:49.018 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:20:13.315 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:20:13.318 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:20:47.667 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:20:47.670 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:21:23.508 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:21:23.525 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:23:58.289 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:24:00.642 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:28:12.466 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/getKyc, client=127.0.0.1, user=dev]
+23:28:12.468 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/getKyc, client=127.0.0.1, user=dev]
+23:32:07.153 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:32:07.155 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:33:24.539 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/getKyc, client=127.0.0.1, user=januarius.ming@gmail.com]
+23:33:24.653 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/getKyc, client=127.0.0.1, user=januarius.ming@gmail.com]
+23:34:25.692 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev]
+23:34:25.695 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=dev, payload={
+    "id": 42020
+}]
+23:34:30.422 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=januarius.ming@gmail.com]
+23:34:44.301 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=januarius.ming@gmail.com, payload={
+    "id": 42020
+}]
+23:45:31.177 - o.s.w.f.CommonsRequestLoggingFilter - Filter 'requestLoggingFilter' configured for use
+23:46:04.368 - o.s.w.f.CommonsRequestLoggingFilter - Before request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=januarius.ming@gmail.com]
+23:46:08.538 - o.s.w.f.CommonsRequestLoggingFilter - After request [POST /xstock_api_test/c/ticker/allSwapBusinessInfoList, client=127.0.0.1, user=januarius.ming@gmail.com, payload={
+    "id": 42020
+}]

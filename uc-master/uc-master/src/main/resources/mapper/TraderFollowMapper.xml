@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.TraderFollowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.TraderFollow">
+        <id column="id" property="id"/>
+        <result column="trader_id" property="traderId"/>
+        <result column="user_id" property="userId"/>
+        <result column="amount" property="amount"/>
+        <result column="type" property="type"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, trader_id, user_id, amount,type,create_time
+    </sql>
+
+    <select id="getFollowList" resultType="com.xstocks.uc.pojo.vo.FollowUserVo">
+        SELECT
+        f.user_id AS userId ,
+        f.amount AS amount,
+        f.type AS type,
+        ( SELECT profit_ratio FROM t_trader WHERE id = f.trader_id ) AS profitRatio,
+        f.max_amount AS maxAmount,
+        f.create_time AS createTime,
+        u.tx_address AS address
+        FROM
+        t_trader_follow f LEFT JOIN `user` u ON u.id = f.user_id
+        WHERE f.trader_id = (SELECT id FROM t_trader WHERE user_id = #{traderId,jdbcType=INTEGER})
+    </select>
+
+    <select id="getMyTraders" resultType="com.xstocks.uc.pojo.vo.TraderDataVo">
+        SELECT
+            u.logo,
+            u.nick_name AS nickName,
+            t.user_id AS id,
+            DATEDIFF( NOW(), t.audit_time ) AS days
+        FROM
+            t_trader_follow f
+                LEFT JOIN t_trader t ON f.trader_id = t.id
+                LEFT JOIN `user` u ON t.user_id = u.id
+        WHERE
+            f.user_id = #{id}
+    </select>
+
+    <select id="follows" resultType="com.xstocks.uc.pojo.vo.TraderDataVo">
+        SELECT
+        u.id,
+        u.logo,
+        CONCAT(
+        LEFT(phone, FLOOR(LENGTH(phone) / 2)),
+        REPEAT('*', FLOOR(LENGTH(phone) / 2)),
+        IF(MOD(LENGTH(phone), 2) = 1, RIGHT(phone, 1), '')
+        ) AS nickName,
+        DATEDIFF(NOW(),f.create_time) AS days
+        FROM
+        t_trader_follow f
+        LEFT JOIN `user` u ON f.user_id = u.id
+        WHERE
+        f.trader_id = (SELECT id FROM t_trader WHERE `status` = 1 AND user_id = #{traderUid})
+    </select>
+
+    <select id="getByUid" resultType="com.xstocks.uc.pojo.TraderFollow">
+        SELECT
+            f.*
+        FROM
+            t_trader_follow f
+        WHERE
+            f.user_id = #{userId}
+          AND f.trader_id = #{traderId}
+        ORDER BY
+            f.id DESC
+            LIMIT 1
+    </select>
+
+</mapper>

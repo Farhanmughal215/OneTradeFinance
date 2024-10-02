@@ -1,0 +1,5 @@
+env: "test"
+contractAddress : "0xa3317F76aec07bCDc08a46eE1F3ffad85F5C1F1E"
+privateKey      : "0xd17318bbc5b85f88be4fc71908fe31d73b588c19bd4c30b61884d8dc4360a329"
+url             : "https://rpc.wowearn.io/"
+listenerPort    : ":10188"

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xstocks.uc.mapper.TraderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xstocks.uc.pojo.Trader">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="status" property="status" />
+        <result column="email" property="email" />
+        <result column="social_account" property="socialAccount" />
+        <result column="profit_ratio" property="profitRatio" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, status, email, social_account, profit_ratio, create_time, update_time
+    </sql>
+
+    <select id="getNextAddressRandom" resultType="java.lang.Integer">
+        SELECT
+        IFNULL( MAX( address_random + 1 ), 100000 )
+        FROM
+        t_trader
+    </select>
+
+    <select id="checkUserIdTrader" resultType="java.lang.Integer">
+        SELECT
+        COUNT(0)
+        FROM
+        `user` u
+        INNER JOIN t_trader t ON t.user_id = u.id
+        WHERE
+        u.id = #{userId,jdbcType=INTEGER}
+        AND t.`status` = 1
+    </select>
+
+    <select id="getTraderByAddress" resultType="com.xstocks.uc.pojo.Trader">
+        SELECT
+        t.*
+        FROM t_trader t
+        WHERE
+        t.address = #{address,jdbcType=VARCHAR}
+        AND t.`status` = 1
+    </select>
+
+    <select id="getFullList" resultType="java.lang.Integer">
+        SELECT
+        t.user_id
+        FROM
+        t_trader t
+        LEFT JOIN ( SELECT COUNT( 0 ) AS cnt, trader_id FROM t_trader_follow GROUP BY trader_id ) f ON f.trader_id = t.id
+        WHERE f.cnt >= t.max_follow_count
+    </select>
+
+    <select id="getAvailableList" resultType="java.lang.Integer">
+        SELECT
+            t.user_id
+        FROM
+            t_trader t
+        WHERE
+            t.`status` = 1
+    </select>
+
+    <select id="getTraderInfo" resultType="com.xstocks.uc.pojo.po.TraderWrapperPO">
+        SELECT
+            u.logo,
+            u.nick_name AS nickName,
+            t.user_id AS userId,
+            t.max_follow_count AS maxFollowCount,
+            (SELECT COUNT(0) FROM t_trader_follow WHERE trader_id = t.id AND `status`=1) AS currentFollowCount,
+            ( SELECT IF(COUNT(0) > 0,1,0) FROM t_trader_follow
+            WHERE trader_id = t.id AND user_id = #{userId,jdbcType=INTEGER} ) AS followStatus
+        FROM
+            t_trader t
+                LEFT JOIN `user` u ON t.user_id = u.id
+        WHERE
+        t.`status` = 1
+        AND u.id IN
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </select>
+
+    <select id="getFollowSet" resultType="com.xstocks.uc.pojo.vo.FollowSetVo">
+        SELECT
+            f.amount AS amount,
+            f.max_amount AS maxAmount,
+            f.type
+        FROM
+            t_trader_follow f
+                LEFT JOIN t_trader t ON f.trader_id = t.id
+        WHERE
+            t.`status` = 1
+          AND f.user_id = #{currentUid}
+          AND t.user_id = #{traderUid}
+            LIMIT 1
+    </select>
+
+    <select id="getFollowStatus" resultType="java.lang.Integer">
+        SELECT
+            IF
+                ( COUNT( 0 ) > 0, 1, 0 ) AS followStatus
+        FROM
+            t_trader_follow f
+                LEFT JOIN t_trader t ON t.id = f.trader_id
+        WHERE
+            f.user_id = #{currentUid}
+          AND t.user_id = #{traderUid}
+    </select>
+
+    <select id="getTraderDataInfo" resultType="com.xstocks.uc.pojo.vo.TraderInfoDataVo">
+        SELECT
+            t.user_id AS traderUid,
+            t.max_follow_count AS maxFollowCount,
+            ( SELECT COUNT( 0 ) FROM t_trader_follow WHERE status = 1 AND  trader_id = t.id ) AS followerCount
+        FROM
+            t_trader t
+        WHERE
+            t.user_id = #{userId}
+    </select>
+
+    <select id="waitList" resultType="com.xstocks.uc.pojo.vo.BTraderListVo">
+        SELECT
+        t.id ,
+        u.tx_address AS address,
+        u.nick_name AS nickName,
+        u.synopsis ,
+        t.`status`,
+        t.create_time AS createTime,
+        t.contract_certificate AS contractCertificate
+        FROM
+        t_trader t
+        LEFT JOIN `user` u ON t.user_id = u.id
+        <where>
+            <if test="param.status != null">
+                AND t.status = #{param.status,jdbcType=INTEGER}
+            </if>
+            <if test="param.address != null and param.address != ''">
+                AND u.tx_address LIKE CONCAT('%',#{param.address},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="bTraderList" resultType="com.xstocks.uc.pojo.vo.TraderStatisticsVo">
+        SELECT
+        t.id,
+        t.`status`,
+        u.nick_name AS nickName,
+        u.tx_address AS address,
+        u.synopsis,
+        t.audit_time AS createTime,
+        d.*
+        FROM
+        t_trader t
+        LEFT JOIN `user` u ON t.user_id = u.id
+        LEFT JOIN t_trader_data d ON t.id = d.trader_id
+        WHERE t.`status` IN(1,2,3)
+        <if test="param.address != null and param.address != ''">
+            AND u.tx_address LIKE CONCAT('%',#{param.address},'%')
+        </if>
+        ORDER BY t.status,t.id DESC
+    </select>
+
+    <select id="queryTraderDetail" resultType="com.xstocks.uc.pojo.vo.TraderStatisticsVo">
+        SELECT
+        t.id,
+        t.`status`,
+        u.nick_name AS nickName,
+        u.tx_address AS address,
+        u.synopsis,
+        t.audit_time AS createTime,
+        d.*
+        FROM
+        t_trader t
+        LEFT JOIN `user` u ON t.user_id = u.id
+        LEFT JOIN t_trader_data d ON t.id = d.trader_id
+        WHERE t.id = #{traderId}
+    </select>
+</mapper>

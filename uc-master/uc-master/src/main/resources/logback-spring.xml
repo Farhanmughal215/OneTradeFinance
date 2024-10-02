@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 定义日志文件 输入位置 -->
+    <property name="log_dir" value="./logs/uc"/>
+    <!-- 日志最大的历史 30天 -->
+    <property name="maxHistory" value="30"/>
+
+    <!-- appender是配置输出终端，ConsoleAppender是控制台,name是自定义名 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 配置日志格式，这是一个比较通用的格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 基于时间滚动，就是每天的日志输出到不同的文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 输出日志的目录文件名，window中默认分区为当前程序的硬盘分区，%d{yyyy-MM-dd}是当前日期 -->
+            <fileNamePattern>${log_dir}/debug/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最大保存99个文件，超出的历史文件会被删除 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <!-- 按照日志级别进行过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只收集INFO级别的日志，其他高级别和低级别的日志都放弃 -->
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 输出终端是滚动文件 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 基于时间滚动，就是每天的日志输出到不同的文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 输出日志的目录文件名，window中默认分区为当前程序的硬盘分区，%d{yyyy-MM-dd}是当前日期 -->
+            <fileNamePattern>${log_dir}/info/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最大保存99个文件，超出的历史文件会被删除 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <!-- 按照日志级别进行过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只收集INFO级别的日志，其他高级别和低级别的日志都放弃 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 基于时间滚动，就是每天的日志输出到不同的文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 输出日志的目录文件名，window中默认分区为当前程序的硬盘分区，%d{yyyy-MM-dd}是当前日期 -->
+            <fileNamePattern>${log_dir}/warn/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最大保存99个文件，超出的历史文件会被删除 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <!-- 按照日志级别进行过滤 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只收集INFO级别的日志，其他高级别和低级别的日志都放弃 -->
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 除了filter，其他 配置和上面一样， 只是name和文件路径不同-->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/error/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <!-- 阈值过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 只收集INFO级别的日志，其他高级别和低级别的日志都放弃 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- root是根日志打印器，只有一个，负责整个系统的日志输出  -->
+    <root level="INFO">
+        <!-- 将上面三个输出终端配置到根打印器，将对整个系统 生效。 -->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+<!--    <logger name="com.xstocks.uc.mapper" level="DEBUG"/>-->
+
+    <!--    <logger name="jdbc.sqltiming" level="DEBUG"/>-->
+    <!--    <logger name="com.ibatis" level="DEBUG"/>-->
+    <!--    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>-->
+    <!--    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>-->
+    <!--    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>-->
+    <!--    <logger name="java.sql.Connection" level="DEBUG"/>-->
+    <!--    <logger name="java.sql.Statement" level="DEBUG"/>-->
+    <!--    <logger name="java.sql.PreparedStatement" level="DEBUG"/>-->
+    <!--    <logger name="java.sql.ResultSet" level="DEBUG"/>-->
+    <!--    <logger name="java.sql" level="DEBUG"/>-->
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="false">
+        <appender-ref ref="DEBUG"/>
+    </logger>
+</configuration>
