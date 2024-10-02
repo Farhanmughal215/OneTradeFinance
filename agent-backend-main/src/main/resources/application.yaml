@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: agent-backend
+
+server:
+  port: 7899
+  compression:
+    enabled: true
+  error:
+    include-binding-errors: always
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+  servlet:
+    context-path: /agent-backend
+  forward-headers-strategy: none
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+app:
+  okhttp-config:
+    connect-timeout: 2000
+    read-timeout: 60000
+    write-timeout: 2000
+    max-idle-connections: 20
+    keep-alive-duration: 3600

@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-wz941up5h8w5h5b3kbo.mysql.rds.aliyuncs.com:3306/agent?characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false&allowPublicKeyRetrieval=TRUE&allowMultiQueries=true
+    username: root
+    password: DVACqEOyVeInL4!SCbtl6gebY3js
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 100
+      idle-timeout: 30000
+      pool-name: CPPool
+      max-lifetime: 1800000
+      connection-timeout: 31000
+      connection-test-query: SELECT 1
+  redis:
+    redisson:
+      config: |
+        singleServerConfig:
+          database: 14
+          address: redis://120.79.180.146:6379
+          password: nN0hSbSkGetOh^Gj
+          idleConnectionTimeout: 10000
+          connectTimeout: 10000
+          timeout: 10000
+          retryAttempts: 3
+          retryInterval: 1500
+          connectionMinimumIdleSize: 24
+          connectionPoolSize: 64
+          dnsMonitoringInterval: 5000
+          pingConnectionInterval: 30000
+  rabbitmq:
+    addresses: amqp://47.97.182.243:5672
+    username: guest
+    password: guest
+    template:
+      retry:
+        enabled: true
+        max-interval: 3000ms
+        max-attempts: 5
+        multiplier: 1.2
+        initial-interval: 1000ms
+
+app:
+  task-config:
+    enable: ${ENABLE_TASK:false}
